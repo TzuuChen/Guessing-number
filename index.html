@@ -9,6 +9,7 @@
     <p>1 到 100 之間的數字，你猜是多少？</p>
     <input type="text" id="guessField" />
     <input type="submit" value="猜!" id="guessSubmit" />
+    <input type="submit" value="揭曉答案" id="answer" />
     <p class="message"></p>
   </body>
   <script>
@@ -20,13 +21,14 @@
     const guessField = document.getElementById("guessField");
     const guessSubmit = document.getElementById("guessSubmit");
     const message = document.querySelector(".message");
+    const answer = document.getElementById("answer");
 
     //Initialize gurssCount;
     let guessCount = 0;
 
     // Event listener
     guessSubmit.addEventListener("click", checkGuess);
-
+    answer.addEventListener("click",checkAnswer);
     // Guess function
     function checkGuess() {
       const userGuess = parseInt(guessField.value);
@@ -47,6 +49,11 @@
 
       guessField.value = "";
       guessField.focus();
+    }
+    function checkAnswer() {
+      message.textContent = `答案是：${targetNumber}`;
+      message.style.color = "green";
+      guessSubmit.disabled = true;
     }
   </script>
 </html>
