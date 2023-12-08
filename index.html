@@ -12,6 +12,7 @@
     </p>
     <input type="text" id="guessField" />
     <input type="submit" value="猜!" id="guessSubmit" />
+    <input type="submit" value="揭曉答案" id="answer" />
     <p class="message"></p>
     <p class="failmessage"></p>
   </body>
@@ -24,6 +25,7 @@
     const guessField = document.getElementById("guessField");
     const guessSubmit = document.getElementById("guessSubmit");
     const message = document.querySelector(".message");
+    const answer = document.getElementById("answer");
     const lowerbound = document.querySelector(".lowerbound");
     const upperbound = document.querySelector(".upperbound");
     const failmessage = document.querySelector(".failmessage");
@@ -33,7 +35,15 @@
 
     // Event listener
     guessSubmit.addEventListener("click", checkGuess);
-
+    answer.addEventListener("click",checkAnswer)
+    
+    //answer function
+    function checkAnswer() {
+      message.textContent = `答案是：${targetNumber}`;
+      message.style.color = "green";
+      guessSubmit.disabled = true;
+    }
+    
     // Guess function
     function checkGuess() {
       const userGuess = parseInt(guessField.value);
@@ -58,6 +68,6 @@
         message.style.color = "red";
         upperbound.textContent = userGuess;
       }
-    }
+  }
   </script>
 </html>
