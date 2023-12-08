@@ -57,6 +57,7 @@
       message.textContent = `答案是：${targetNumber}`;
       message.style.color = "green";
       guessSubmit.disabled = true;
+      setTimeout(playagain,5000);//自動接關
     }
 
     // Guess function
@@ -69,11 +70,14 @@
         failmessage.textContent = `You failed! 答案是 ${targetNumber}!`;
         failmessage.style.color = "red";
         guessSubmit.disabled = true;
+        setTimeout(playagain,5000);//自動接關
       }
+
       if (userGuess === targetNumber) {
         message.textContent = `恭喜你，你猜對了！你這次猜了${guessCount}次哦～`;
         message.style.color = "green";
         guessSubmit.disabled = true;
+        setTimeout(playagain,5000);//自動接關
       } else if (userGuess < targetNumber) {
         message.textContent = "太小了，再試一次。";
         message.style.color = "red";
@@ -84,5 +88,7 @@
         upperbound.textContent = userGuess;
       }
     }
+    
+    
   </script>
 </html>
