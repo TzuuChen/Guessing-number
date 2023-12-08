@@ -12,13 +12,14 @@
     </p>
     <input type="text" id="guessField" />
     <input type="submit" value="猜!" id="guessSubmit" />
-    <input type="submit" value="揭曉答案" id="answer" />
+    <input type="button" value="揭曉答案" id="answer" />
+    <input type="button" value="再玩一次" id="again" />
     <p class="message"></p>
     <p class="failmessage"></p>
   </body>
   <script>
     // Random number
-    const targetNumber = Math.floor(Math.random() * 100) + 1;
+    let targetNumber = Math.floor(Math.random() * 100) + 1;
     console.log("answer: " + targetNumber);
 
     // Get element
@@ -29,13 +30,27 @@
     const lowerbound = document.querySelector(".lowerbound");
     const upperbound = document.querySelector(".upperbound");
     const failmessage = document.querySelector(".failmessage");
+    const again = document.getElementById("again");
 
     //Initialize guessCount;
     let guessCount = 0;
 
     // Event listener
     guessSubmit.addEventListener("click", checkGuess);
-    answer.addEventListener("click",checkAnswer)
+    answer.addEventListener("click",checkAnswer);
+    again.addEventListener("click",playagain);
+
+    //paly again function
+    function playagain(){
+      message.textContent = "";
+      failmessage.textContent= ""; //清除訊息
+      guessSubmit.disabled = false; //猜按鈕重新啟用
+      guessCount =0;
+      targetNumber = Math.floor(Math.random() * 100) + 1;
+      console.log("新的答案: " + targetNumber); //重新隨機
+      lowerbound.textContent =1;
+      upperbound.textContent = 100;
+    }
     
     //answer function
     function checkAnswer() {
@@ -43,7 +58,7 @@
       message.style.color = "green";
       guessSubmit.disabled = true;
     }
-    
+
     // Guess function
     function checkGuess() {
       const userGuess = parseInt(guessField.value);
@@ -68,6 +83,6 @@
         message.style.color = "red";
         upperbound.textContent = userGuess;
       }
-  }
+    }
   </script>
 </html>
