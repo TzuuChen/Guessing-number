@@ -16,6 +16,7 @@
     <input type="button" value="再玩一次" id="again" />
     <p class="message"></p>
     <p class="failmessage"></p>
+    <p class="second"></p>
   </body>
   <script>
     // Random number
@@ -31,6 +32,7 @@
     const upperbound = document.querySelector(".upperbound");
     const failmessage = document.querySelector(".failmessage");
     const again = document.getElementById("again");
+    const second = document.querySelector(".second");
 
     //Initialize guessCount;
     let guessCount = 0;
@@ -39,7 +41,18 @@
     guessSubmit.addEventListener("click", checkGuess);
     answer.addEventListener("click",checkAnswer);
     again.addEventListener("click",playagain);
-
+    
+    //倒數
+    function delayedDisplay(string,ms,callback){
+      setTimeout(function(){
+        display(string);}
+        , ms);
+    }
+    // display
+    function display(string){
+      second.textContent= string;
+      second.style.color= "black";
+    }
     //paly again function
     function playagain(){
       message.textContent = "";
@@ -66,12 +79,6 @@
       console.log("userGuess: " + userGuess);
 
       guessCount++; //計算點擊次數
-      if (guessCount > 5) {
-        failmessage.textContent = `You failed! 答案是 ${targetNumber}!`;
-        failmessage.style.color = "red";
-        guessSubmit.disabled = true;
-        setTimeout(playagain,5000);//自動接關
-      }
 
       if (userGuess === targetNumber) {
         message.textContent = `恭喜你，你猜對了！你這次猜了${guessCount}次哦～`;
@@ -86,6 +93,23 @@
         message.textContent = "太大了，再試一次。";
         message.style.color = "red";
         upperbound.textContent = userGuess;
+      }
+
+      //失敗條件
+      if (guessCount > 4) {
+        message.textContent = "";
+        failmessage.textContent = `You failed! 答案是 ${targetNumber}!`;
+        failmessage.style.color = "red";
+        guessSubmit.disabled = true;
+        setTimeout(function(){
+          delayedDisplay("5",0,display);
+          delayedDisplay("4",1000,display);
+          delayedDisplay("3",2000,display);
+          delayedDisplay("2",3000,display);
+          delayedDisplay("1",4000,display);
+          delayedDisplay("",5000,display);
+        },0); 
+        setTimeout(playagain,5000)//自動接關
       }
     }
     
