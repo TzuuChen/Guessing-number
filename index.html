@@ -45,9 +45,23 @@
     //倒數
     function delayedDisplay(string,ms,callback){
       setTimeout(function(){
-        display(string);}
-        , ms);
+        callback(string);
+        }, ms);
+      }
+    function countdown(){
+        delayedDisplay("5",0,display);
+        delayedDisplay("4",1000,display);
+        delayedDisplay("3",2000,display);
+        delayedDisplay("2",3000,display);
+        delayedDisplay("1",4000,display);
+        delayedDisplay("",5000,display);
+        restart();
     }
+    //自動接關
+    function restart(){
+      setTimeout(playagain,5000)
+    }
+
     // display
     function display(string){
       second.textContent= string;
@@ -70,7 +84,7 @@
       message.textContent = `答案是：${targetNumber}`;
       message.style.color = "green";
       guessSubmit.disabled = true;
-      setTimeout(playagain,5000);//自動接關
+      countdown();
     }
 
     // Guess function
@@ -84,7 +98,7 @@
         message.textContent = `恭喜你，你猜對了！你這次猜了${guessCount}次哦～`;
         message.style.color = "green";
         guessSubmit.disabled = true;
-        setTimeout(playagain,5000);//自動接關
+        countdown();
       } else if (userGuess < targetNumber) {
         message.textContent = "太小了，再試一次。";
         message.style.color = "red";
@@ -96,20 +110,12 @@
       }
 
       //失敗條件
-      if (guessCount > 4) {
+      if (guessCount >= 5 && userGuess !== targetNumber) {
         message.textContent = "";
         failmessage.textContent = `You failed! 答案是 ${targetNumber}!`;
         failmessage.style.color = "red";
         guessSubmit.disabled = true;
-        setTimeout(function(){
-          delayedDisplay("5",0,display);
-          delayedDisplay("4",1000,display);
-          delayedDisplay("3",2000,display);
-          delayedDisplay("2",3000,display);
-          delayedDisplay("1",4000,display);
-          delayedDisplay("",5000,display);
-        },0); 
-        setTimeout(playagain,5000)//自動接關
+        countdown();
       }
     }
     
